@@ -5,6 +5,7 @@
  */
 package lk.ac.pdn.co328.studentSystem;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +23,7 @@ public abstract class StudentRegister
     public abstract void removeStudent(int regNo);
 
     //Finds the student with the given registration number
-    public abstract Student findStudent(int regNo);
+    public abstract Student findStudent(int regNo) throws Exception;
 
     // Cleans all the data from the student register
     public abstract void reset();

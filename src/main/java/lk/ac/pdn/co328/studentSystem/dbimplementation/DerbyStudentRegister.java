@@ -12,12 +12,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import lk.ac.pdn.co328.studentSystem.Student;
 import lk.ac.pdn.co328.studentSystem.StudentRegister;
-
+import java.sql.*;
 /**
  *
  * @author himesh
  */
-public class DerbyStudentRegister extends StudentRegister {
+public class DerbyStudentRegister extends StudentRegister  {
 
     Connection connection = null;
     public DerbyStudentRegister() throws SQLException
@@ -26,31 +26,39 @@ public class DerbyStudentRegister extends StudentRegister {
             connection = DriverManager.getConnection(dbURL1);
             if (connection != null)
             {
-                String SQL_CreateTable = "CREATE TABLE Students(id INT , name VARCHAR(24))";
-                System.out.println ( "Creating table addresses..." );
-                try 
-                {
+
+
+                DatabaseMetaData dbm = connection.getMetaData();
+
+                ResultSet tables = dbm.getTables(null, null, "STUDENTS", null);
+                if (tables.next()) {
+
+                }
+                else {
+
+
+                    String SQL_CreateTable = "CREATE TABLE Students(id INT , name VARCHAR(24) , lastname VARCHAR(24))";
+                    System.out.println("Creating table addresses...");
+
                     Statement stmnt = connection.createStatement();
-                    stmnt.execute( SQL_CreateTable );
+                    stmnt.executeUpdate(SQL_CreateTable);
                     stmnt.close();
                     System.out.println("Table created");
-                } catch ( SQLException e )
-                {
-                    System.out.println(e);
+
+                    System.out.println("Connected to database");
                 }
-               System.out.println("Connected to database");
             }
             else
             {
                 throw new SQLException("Connection Failed");
             }
     }
-    
+
     @Override
     public void addStudent(Student st) throws Exception {
         if (connection != null)
         {
-            String SQL_AddStudent = "INSERT INTO Students VALUES (" + st.getId() + ",'" + st.getFirstName() + "')";
+            String SQL_AddStudent = "INSERT INTO Students VALUES (" + st.getId() + ",'" + st.getFirstName()  + "'" + ",'" + st.getLastName()  + "')";
             System.out.println ( "Adding the student..." + SQL_AddStudent);
 
             Statement stmnt = connection.createStatement();
@@ -71,8 +79,31 @@ public class DerbyStudentRegister extends StudentRegister {
     }
 
     @Override
-    public Student findStudent(int regNo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Student findStudent(int regNo) throws Exception {
+
+        if (connection != null)
+        {
+            String SQL_Find_Student = "SELECT * FROM Students WHERE id= "+regNo;
+            System.out.println ( "Adding the student..." + SQL_Find_Student);
+
+            Statement stmnt = connection.createStatement();
+
+            ResultSet res = stmnt.executeQuery(SQL_Find_Student);
+            Student s=null;
+            while (res.next()) {
+                s = new Student(res.getInt("id"), res.getString("name"), res.getString("lastname"));
+            }
+
+            stmnt.close();
+            return s;
+
+        }
+        else
+        {
+            throw new Exception("Database Connection Error");
+        }
+
+
     }
 
     @Override

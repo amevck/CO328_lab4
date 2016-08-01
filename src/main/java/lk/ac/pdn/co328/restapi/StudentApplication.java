@@ -16,7 +16,11 @@ public class StudentApplication extends Application
  
     public StudentApplication() {
         // ADD YOUR RESTFUL RESOURCES HERE
-        this.singletons.add(new StudentService());
+        try {
+            this.singletons.add(new StudentService());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
  
     @Override

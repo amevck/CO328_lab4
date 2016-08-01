@@ -20,6 +20,8 @@ and open the template in the editor.
         <input type="text" id="id_field"><br>
         Name:<br>
         <input type="text" id="name_field"><br>
+        Name:<br>
+        <input type="text" id="Last_name_field"><br>
 
         <button onclick="getData()">GET</button>
         <button onclick="postData()">POST</button>
@@ -48,7 +50,7 @@ and open the template in the editor.
                     var requestData = { "student":{
                                         id: $("#id_field").val(),
                                         firstName: $("#name_field").val(),
-                                        lastName: $("#name_field").val(),
+                                        lastName: $("#Last_name_field").val(),
                                     }
                                 }
                   $.ajax({
