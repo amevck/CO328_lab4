@@ -20,7 +20,7 @@ public abstract class StudentRegister
     public abstract void addStudent(Student st) throws Exception ;
 
     // Remove a student from the system
-    public abstract void removeStudent(int regNo);
+    public abstract void removeStudent(int regNo) throws Exception;
 
     //Finds the student with the given registration number
     public abstract Student findStudent(int regNo) throws Exception;

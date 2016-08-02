@@ -74,8 +74,25 @@ public class DerbyStudentRegister extends StudentRegister  {
     }
 
     @Override
-    public void removeStudent(int regNo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removeStudent(int regNo) throws Exception {
+
+
+        if (connection != null)
+        {
+            String SQL_remove_Student = "DELETE FROM students WHERE id="+regNo;
+
+            Statement stmnt = connection.createStatement();
+
+            stmnt.execute(SQL_remove_Student);
+            stmnt.close();
+
+
+        }
+        else
+        {
+            throw new Exception("Database Connection Error");
+        }
+
     }
 
     @Override

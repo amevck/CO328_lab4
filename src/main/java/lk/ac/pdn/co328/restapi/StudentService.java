@@ -32,9 +32,8 @@ public class StudentService
 
     @PUT
     @Path("student/{id}")
-    @Consumes("application/xml")
-    public Response modifyStudent(@PathParam("id") int id, Student input)
-    {
+
+    public Response modifyStudent(@PathParam("id") int id, Student input) throws Exception {
         if(input == null) {
             try {
                 register.addStudent(input);
